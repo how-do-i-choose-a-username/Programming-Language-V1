@@ -1,0 +1,43 @@
+variable vc2{
+    int x
+    int y
+
+    new(int _x = 0, int _y = 0){
+        my.x = _x
+        my.y = _y
+    }
+
+    add(vc2 vector){
+        vc2 sum
+        sum.x = my.x + vector.x
+        sum.y = my.y + vector.y
+        return sum
+    }
+
+    subtract( vc2 vector){
+        vc2 result
+        result.x = my.x - vector.x
+        result.y = my.y - vector.y
+        return result
+    }
+
+    //multiply(){
+
+    //}
+
+    //divide(){
+
+    //}
+
+    //equals(){
+
+    //}
+
+    //length(){
+
+    //}
+
+    //modulus(){
+
+    //}
+}

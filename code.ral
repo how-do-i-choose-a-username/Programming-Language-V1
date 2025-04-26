@@ -1,0 +1,16 @@
+include functions.ral
+include variables.ral
+
+vc2 vector
+vector = vc2(5,10)
+thingo = vc2(2,9)
+
+thingo = thingo + vector
+
+if ( 1 == 1){
+out(thingo.x)
+
+}
+else{
+out(thingo.y)
+}

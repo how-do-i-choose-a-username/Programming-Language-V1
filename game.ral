@@ -1,0 +1,209 @@
+variable pos{
+    int x
+    int y
+
+    new(int _x = 0, int _y = 0){
+        my.x = _x
+        my.y = _y
+    }
+
+    add(pos position){
+        pos sum
+        sum.x = my.x + position.x
+        sum.y = my.y + position.y
+        return sum
+    }
+
+    subtract(pos position){
+        pos sum
+        sum.x = my.x - position.x
+        sum.y = my.y - position.y
+        return sum
+    }
+}
+
+variable lstpos{
+    lst x
+    lst y
+
+    new(pos position = pos()){
+        my.x = my.x + @position.x
+        my.y = my.y + @position.y
+    }
+
+    add(lstpos new){
+        lstpos result
+        result.x = my.x + new.x
+        result.y = my.y + new.y
+        return result
+    }
+
+    length(){
+        return @my.x
+    }
+}
+
+int worldSize
+worldSize = 15
+function render(pos player, lstpos bullets){
+    int row
+    row = worldSize
+
+    repeat{
+        lst output
+        int colom
+        repeat{
+            if (row == player.y && colom == player.x){
+                output = output + @80
+            }
+            else{
+                int count
+                int length
+                length = @bullets
+                repeat{
+                    if (row == bullets.y[count] && colom == bullets.x[count]){
+                        output = output + @111  //  Add an o for a bullet
+                        exit
+                    }
+
+                    count = count + 1
+                    if (count == length){
+                        output = output + @46
+                        exit
+                    }
+                }
+            }
+            output = output + @32   //  Add a space to make it look nicer
+            colom = colom + 1
+            if (colom > worldSize){
+                exit
+            }
+        }
+
+        out(output)
+
+        row = row - 1
+        if (row < 0){
+            exit
+        }
+    }
+}
+
+lstpos bulletPos
+bulletPos = lstpos(pos(5, 5))
+lstpos bulletSpeed
+bulletSpeed = lstpos(pos(1,0))
+pos player
+repeat{
+
+    render(player, bulletPos)
+
+    int first
+    int second
+    int length
+    lst dataIn
+    dataIn = lstin()
+    length = @dataIn
+    if (length > 0){
+        first = dataIn[0]
+    }
+    if (length > 1){
+        second = dataIn[1]
+    }
+    
+    if (first == 32){
+        if (second == 119){   //  Up
+            bulletPos.x = bulletPos.x + @player.x
+            bulletPos.y = bulletPos.y + @player.y
+            bulletSpeed.x = bulletSpeed.x + @0
+            bulletSpeed.y = bulletSpeed.y + @1
+        }
+        if (second == 115){   //  Down
+            bulletPos.x = bulletPos.x + @player.x
+            bulletPos.y = bulletPos.y + @player.y
+            bulletSpeed.x = bulletSpeed.x + @0
+            bulletSpeed.y = bulletSpeed.y + @-1
+        }
+        if (second == 97){    //  Left
+            bulletPos.x = bulletPos.x + @player.x
+            bulletPos.y = bulletPos.y + @player.y
+            bulletSpeed.x = bulletSpeed.x + @-1
+            bulletSpeed.y = bulletSpeed.y + @0
+        }
+        if (second == 100){   //  Right
+            bulletPos.x = bulletPos.x + @player.x
+            bulletPos.y = bulletPos.y + @player.y
+            bulletSpeed.x = bulletSpeed.x + @1
+            bulletSpeed.y = bulletSpeed.y + @0
+        }
+    }
+    if (first == 119){   //  Up
+        player = player + pos(0,1)
+    }
+    if (first == 115){   //  Down
+        player = player + pos(0,-1)
+    }
+    if (first == 97){    //  Left
+        player = player + pos(-1,0)
+    }
+    if (first == 100){   //  Right
+        player = player + pos(1,0)
+    }
+    if (player.x < 0){
+        player.x = worldSize
+    }
+    if (player.y < 0){
+        player.y = worldSize
+    }
+    if (player.x > worldSize){
+        player.x = 0
+    }
+    if (player.y > worldSize){
+        player.y = 0
+    }    
+
+
+    int dead
+    int count
+    int bulletLength
+    bulletLength = @bulletPos
+    repeat{
+
+        bulletPos.x[count] = bulletPos.x[count] + bulletSpeed.x[count]
+        bulletPos.y[count] = bulletPos.y[count] + bulletSpeed.y[count]
+
+        if (bulletPos.x[count] < 0){
+            bulletPos.x[count] = worldSize
+        }
+        if (bulletPos.y[count] < 0){
+            bulletPos.y[count] = worldSize
+        }
+        if (bulletPos.x[count] > worldSize){
+            bulletPos.x[count] = 0
+        }
+        if (bulletPos.y[count] > worldSize){
+            bulletPos.y[count] = 0
+        } 
+
+        if (bulletPos.x[count] == player.x && bulletPos.y[count] == player.y){
+            dead = 1
+        }
+
+        count = count + 1
+        if (count == bulletLength){
+            exit
+        }
+    }
+
+    if (dead == 1){
+        exit
+    }
+}
+
+lst deadMessage
+deadMessage = deadMessage + @68
+deadMessage = deadMessage + @69
+deadMessage = deadMessage + @65
+deadMessage = deadMessage + @68
+out(deadMessage)
+out(@bulletPos)

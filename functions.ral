@@ -1,0 +1,78 @@
+function caps(lst text){
+    int length
+    int counter
+    length = @text
+    repeat{
+        if (text[counter] >= 97 && text[counter] <= 122){
+            text[counter] = text[counter] - 32
+        }
+
+        counter = counter + 1
+        if (counter == length){
+            exit
+        }
+    }
+
+    return text
+}
+
+function lower(lst text){
+    int length
+    int counter
+    length = @text
+    repeat{
+        if (text[counter] >= 65 && text[counter] <= 90){
+            text[counter] = text[counter] + 32
+        }
+
+        counter = counter + 1
+        if (counter == length){
+            exit
+        }
+    }
+
+    return text
+}
+
+function shorten(lst text, int length){
+    int tlength
+    tlength = @text
+    if (length >= tlength){
+        return text
+    }
+
+    lst newText
+    int count
+    repeat{
+        newText = newText + @text[count]
+        count = count + 1
+        if (count == length){
+            exit
+        }
+    }
+
+    return newText
+}
+
+function pow(int base, int index){
+    if (index == 0){
+        return 1
+    }
+    
+    if (index == 1){
+        return base
+    }
+
+    int count
+    int number
+    count = 1
+    number = base
+    repeat{
+        number = number * base
+        count = count + 1
+        if (count == index){
+            exit
+        }
+    }
+    return number
+}

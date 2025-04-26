@@ -1,0 +1,23 @@
+int runs
+repeat{
+    int height
+    repeat{
+        int width
+        lst output
+        repeat{
+
+            output = output + @(width ** height) % ((height + 10) * (height + 1)) + runs + 100
+
+            output = output + @32
+            width = width + 1
+            if (width > 100){
+                exit
+            }
+        }
+        out(output)
+        height = height + 1
+        if (height > 200){
+            exit
+        }
+    }
+}
