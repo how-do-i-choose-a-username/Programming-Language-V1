@@ -1,3 +1,6 @@
+This is my first ever custom programming language, written circa January 2021.
+The following is the original Readme
+
 @ me if you need help
 Operators + - * / %
 Predefined functions: intin, lstin, out
